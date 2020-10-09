@@ -4,10 +4,12 @@
 
 <main>
 	<div class="title">
-		<img src="/images/smm2logo.svg" alt="">
+		<img src="./images/smm2logo.svg" alt="">
 		<span> BINGO </span>
 	</div>
-	<Bingo></Bingo>
+	<div class="bingo">
+		<Bingo></Bingo>
+	</div>
 </main>
 
 <style>
@@ -28,6 +30,8 @@
 		margin: 0 auto;
 		width: 100%;
 		height: 100%;
+		overflow: hidden;
+		overflow-y: scroll;
 	}
 
 	.title {
