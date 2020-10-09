@@ -13,7 +13,7 @@
     'infinite fire flower boss fight',
     'enemy spam (with star)',
     'themed after another game',
-    'kaizo clocks',
+    'kaizo blocks',
     'level can be cheesed',
     'auto mario level',
     '"first level" in title',
