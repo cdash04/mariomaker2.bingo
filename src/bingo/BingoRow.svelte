@@ -2,11 +2,7 @@
   import BingoCell from "./BingoCell.svelte";
   export let cellNames: string[];
   export let freeCellRow: boolean = false;
-  let firstCell: string, secondCell: string, secondLastCell: string, lastCell: string;
-
-  if (freeCellRow) {
-    [firstCell, secondCell, , secondLastCell, lastCell ] = cellNames;
-  }
+  $: [firstCell, secondCell, , secondLastCell, lastCell ] = cellNames;
 </script>
 
 <style>
