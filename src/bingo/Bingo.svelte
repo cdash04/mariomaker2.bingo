@@ -46,11 +46,9 @@
   function shuffle(): void {
     shuffledCellNames = [...cellNames.sort(() => Math.random() - 0.5)];
   }
-
-
 </script>
 
-<style>
+<style lang="scss">
   .cells {
     display: flex;
     flex-direction: column;
