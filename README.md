@@ -1,4 +1,5 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+Mario Maker 2 randomiser bingo card.
+https://mariomaker2-bingo.vercel.app/
 
 ---
 
