@@ -1,51 +1,38 @@
 <script lang="ts">
-  import BingoRow from "./BingoRow.svelte";
-  const cellNames: string[] = [
-    'enemy spam',
-    'sound effects everywhere',
-    'tech level',
-    'pick a door/pipe',
-    'bring yoshie to the goal',
-    '1-1 remake',
-    'collect all coins',
-    'music level',
-    'softlock with no way of dying',
-    'infinite fire flower boss fight',
-    'enemy spam (with star)',
-    'themed after another game',
-    'kaizo blocks',
-    'level can be cheesed',
-    'auto mario level',
-    '"first level" in title',
-    'Meowser or boom-boom',
-    'title level',
-    'terribly named level',
-    'kills mario at the start',
-    'on/off blocks',
-    'Little timmy level',
-    'Japanese speedrun',
-    'refreshing level',
-    'straight path to the goal',
-    'water level',
-    'dev path/item',
-    'Waiting',
-    '#DGR level',
-    'level made for someone else',
-    'naked pipe',
-    'multiplayer',
-  ]
+  import { onDestroy, onMount } from 'svelte';
+  import { cellNames } from '../data/cellNames';
+  import BingoRow from './BingoRow.svelte';
+  import { CellNamesStore, UnattributedCellNamesStore} from '../stores/CellNamesStore'
 
-  let shuffledCellNames = [...cellNames.sort(() => Math.random() - 0.5)];
 
-  $: firstRow = shuffledCellNames.splice(0, 5);
-  $: secondRow = shuffledCellNames.splice(0, 5);
-  $: thirdRow = shuffledCellNames.splice(0, 5);
-  $: fourthRow = shuffledCellNames.splice(0, 5);
-  $: fifthRow = shuffledCellNames.splice(0, 5);
+  let firstRow: string[];
+  let secondRow: string[];
+  let thirdRow: string[];
+  let fourthRow: string[];
+  let fifthRow: string[];
+  let unattributedCellNames: string[];
+
+  const unsubsribe = CellNamesStore.subscribe((value: string[]): void => {
+    const shuffledCellNames = [...cellNames.sort(() => Math.random() - 0.5)];
+    firstRow = shuffledCellNames.slice(0, 5);
+    secondRow = shuffledCellNames.slice(5, 10);
+    thirdRow = shuffledCellNames.slice(10, 15);
+    fourthRow = shuffledCellNames.slice(15, 20);
+    fifthRow = shuffledCellNames.slice(20, 25);
+    UnattributedCellNamesStore.set(cellNames.slice(25));
+  });
 
   function shuffle(): void {
-    shuffledCellNames = [...cellNames.sort(() => Math.random() - 0.5)];
+    CellNamesStore.set(cellNames);
   }
+
+  onMount((): void => {
+    shuffle();
+  });
+
+  onDestroy(() => {
+    unsubsribe();
+  });
 </script>
 
 <style lang="scss">
@@ -60,6 +47,12 @@
     color: #000;
     background-color: #fce9bd;
     border: solid 1px #000;
+    transition: background-color ease 250ms;
+
+    &:hover {
+      cursor: pointer;
+      background-color: darken(#fce9bd, 10);
+    }
   }
 </style>
 
