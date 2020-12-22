@@ -1,8 +1,13 @@
 <script lang="ts">
+  import type { Cell } from "../models/Cell";
   import BingoCell from "./BingoCell.svelte";
-  export let cellNames: string[];
+  export let cells: Cell[];
   export let freeCellRow: boolean = false;
-  $: [firstCell, secondCell, , secondLastCell, lastCell ] = cellNames;
+  const freeCell: Cell = {
+    id: 0,
+    name: 'free'
+  }
+  $: [firstCell, secondCell, , secondLastCell, lastCell ] = cells;
 </script>
 
 <style>
@@ -14,14 +19,14 @@
 
 <div class="row">
   {#if freeCellRow}
-    <BingoCell cellName={firstCell}></BingoCell>
-    <BingoCell cellName={secondCell}></BingoCell>
-    <BingoCell cellName={'free'} free={true} ></BingoCell>
-    <BingoCell cellName={secondLastCell}></BingoCell>
-    <BingoCell cellName={lastCell}></BingoCell>
+    <BingoCell cell={firstCell}></BingoCell>
+    <BingoCell cell={secondCell}></BingoCell>
+    <BingoCell cell={freeCell} free={true} ></BingoCell>
+    <BingoCell cell={secondLastCell}></BingoCell>
+    <BingoCell cell={lastCell}></BingoCell>
   {:else}
-    {#each cellNames as cellName}
-        <BingoCell cellName={cellName}></BingoCell>
-    {/each}
+  {#each cells as cellName}
+      <BingoCell cell={cellName}></BingoCell>
+  {/each}
   {/if}
 </div>

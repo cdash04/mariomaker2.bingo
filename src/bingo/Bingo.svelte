@@ -1,29 +1,33 @@
 <script lang="ts">
-  import { onDestroy, onMount } from 'svelte';
-  import { cellNames } from '../data/cellNames';
   import BingoRow from './BingoRow.svelte';
+  import { cells } from '../data/cellNames';
   import { CellNamesStore, UnattributedCellNamesStore} from '../stores/CellNamesStore'
+  import { dndzone } from 'svelte-dnd-action';
+  import { onDestroy, onMount } from 'svelte';
+  import type { Cell } from '../models/Cell';
+
+  const flipDurationMs = 200;
 
 
-  let firstRow: string[];
-  let secondRow: string[];
-  let thirdRow: string[];
-  let fourthRow: string[];
-  let fifthRow: string[];
-  let unattributedCellNames: string[];
+  let shuffledCellNames: Cell[];
+  let firstRow: Cell[];
+  let secondRow: Cell[];
+  let thirdRow: Cell[];
+  let fourthRow: Cell[];
+  let fifthRow: Cell[];
 
-  const unsubsribe = CellNamesStore.subscribe((value: string[]): void => {
-    const shuffledCellNames = [...cellNames.sort(() => Math.random() - 0.5)];
+  const unsubsribe = CellNamesStore.subscribe((value: Cell[]): void => {
+    shuffledCellNames = [...value.sort(() => Math.random() - 0.5)];
     firstRow = shuffledCellNames.slice(0, 5);
     secondRow = shuffledCellNames.slice(5, 10);
     thirdRow = shuffledCellNames.slice(10, 15);
     fourthRow = shuffledCellNames.slice(15, 20);
     fifthRow = shuffledCellNames.slice(20, 25);
-    UnattributedCellNamesStore.set(cellNames.slice(25));
+    UnattributedCellNamesStore.set(cells.slice(25));
   });
 
   function shuffle(): void {
-    CellNamesStore.set(cellNames);
+    CellNamesStore.set(cells);
   }
 
   onMount((): void => {
@@ -57,11 +61,11 @@
 </style>
 
 <div class="cells">
-  <BingoRow cellNames={firstRow}></BingoRow>
-  <BingoRow cellNames={secondRow}></BingoRow>
-  <BingoRow cellNames={thirdRow} freeCellRow={true}></BingoRow>
-  <BingoRow cellNames={fourthRow}></BingoRow>
-  <BingoRow cellNames={fifthRow}></BingoRow>
+  <BingoRow cells={firstRow}></BingoRow>
+  <BingoRow cells={secondRow}></BingoRow>
+  <BingoRow cells={thirdRow} freeCellRow={true}></BingoRow>
+  <BingoRow cells={fourthRow}></BingoRow>
+  <BingoRow cells={fifthRow}></BingoRow>
 </div>
 
 <button class="shuffle" on:click={shuffle}>

@@ -1,20 +1,21 @@
 <script lang="ts">
   import Icon from 'svelte-awesome';
   import { refresh } from 'svelte-awesome/icons';
+  import type { Cell } from '../models/Cell';
   import { UnattributedCellNamesStore } from '../stores/CellNamesStore';
-  export let cellName: string;
+  export let cell: Cell;
   export let free: boolean = false;
 
-  let unattributedCellNames: string[];
+  let unattributedCellNames: Cell[];
 
   UnattributedCellNamesStore.subscribe((value) => {
     unattributedCellNames = value;
   });
 
-  function changeCellName(currentCellName: string): void {
-    const [ newCellName, ...rest ] = [...unattributedCellNames.sort(() => Math.random() - 0.5)];
-    cellName = newCellName;
-    UnattributedCellNamesStore.set([...rest, currentCellName]);
+  function changeCellName(currentCell: Cell): void {
+    const [ newCell, ...rest ] = [...unattributedCellNames.sort(() => Math.random() - 0.5)];
+    cell = newCell;
+    UnattributedCellNamesStore.set([...rest, currentCell]);
   }
 </script>
 
@@ -63,11 +64,11 @@
 
 <div class="cell" class:-free={free}>
   {#if !free}
-    <div class="actions" on:click={() => changeCellName(cellName)}>
+    <div class="actions" on:click={() => changeCellName(cell)}>
       <Icon data={refresh} spin/>
     </div>
   {/if}
-  { cellName }
+  { cell.name }
 </div>
 
 <!-- markup (zero or more items) goes here -->
