@@ -2,7 +2,6 @@
   import BingoRow from './BingoRow.svelte';
   import { cells } from '../data/cellNames';
   import { CellNamesStore, UnattributedCellNamesStore} from '../stores/CellNamesStore'
-  import { dndzone } from 'svelte-dnd-action';
   import { onDestroy, onMount } from 'svelte';
   import type { Cell } from '../models/Cell';
 

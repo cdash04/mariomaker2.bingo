@@ -68,7 +68,7 @@
       <Icon data={refresh} spin/>
     </div>
   {/if}
-  { cell.name }
+  { cell?.name }
 </div>
 
 <!-- markup (zero or more items) goes here -->
